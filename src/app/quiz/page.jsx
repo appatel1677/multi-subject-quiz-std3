@@ -89,7 +89,7 @@ export default function QuestionPaperPage() {
 
     const handleOptionChange = (questionId, optionIndex) => {
         if (isSubmitted) return;
-        setAnswers({ ...answers, [questionId]: optionIndex });
+        setAnswers(prev => ({ ...prev, [questionId]: optionIndex }));
     };
 
     const calculateFinalScore = () => {
@@ -126,290 +126,29 @@ export default function QuestionPaperPage() {
         window.print();
     };
 
-    const styles = {
-        container: {
-            backgroundColor: '#f5f5f5',
-            minHeight: '100vh',
-            padding: '30px 15px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            fontFamily: 'serif',
-            boxSizing: 'border-box',
-            width: '100%'
-        },
-        topBar: {
-            width: '100%',
-            maxWidth: '850px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '15px',
-            boxSizing: 'border-box'
-        },
-        statusText: {
-            fontSize: '14px',
-            color: '#666',
-            fontFamily: 'sans-serif',
-        },
-        printBtn: {
-            padding: '10px 20px',
-            backgroundColor: '#0056b3',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontFamily: 'sans-serif',
-        },
-        paperCard: {
-            width: '100%',
-            maxWidth: '850px',
-            backgroundColor: 'white',
-            border: '2px solid #222',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-            padding: '40px',
-            boxSizing: 'border-box',
-        },
-        headerBlock: {
-            textAlign: 'center',
-            borderBottom: '4px double #222',
-            paddingBottom: '20px',
-            marginBottom: '25px',
-        },
-        schoolName: {
-            fontSize: '26px',
-            fontWeight: 'bold',
-            margin: '0 0 8px 0',
-            color: '#111',
-        },
-        examTitle: {
-            fontSize: '18px',
-            fontWeight: 'bold',
-            color: '#333',
-            margin: '0',
-        },
-        metaGrid: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '10px',
-            fontSize: '14px',
-            fontWeight: '600',
-            color: '#444',
-            marginTop: '15px',
-        },
-        infoBar: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '15px',
-            backgroundColor: '#f9f9f9',
-            border: '1px solid #ddd',
-            padding: '15px',
-            borderRadius: '5px',
-            marginBottom: '25px',
-            fontSize: '14px',
-        },
-        inputGroup: {
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-        },
-        label: {
-            fontWeight: 'bold',
-            color: '#333',
-        },
-        input: {
-            flex: 1,
-            backgroundColor: 'transparent',
-            border: 'none',
-            borderBottom: '1px solid #777',
-            outline: 'none',
-            padding: '2px 5px',
-            fontFamily: 'sans-serif',
-        },
-        instructionBox: {
-            border: '1px solid #999',
-            padding: '12px',
-            borderRadius: '4px',
-            marginBottom: '30px',
-            backgroundColor: '#fafafa',
-            fontSize: '13px',
-            color: '#444',
-            lineHeight: '1.6',
-        },
-        resultBox: {
-            backgroundColor: '#e6f4ea',
-            border: '2px solid #137333',
-            borderRadius: '8px',
-            padding: '20px',
-            marginBottom: '30px',
-            textAlign: 'center',
-        },
-        resultTitle: {
-            fontSize: '20px',
-            fontWeight: 'bold',
-            color: '#137333',
-            margin: '0 0 5px 0',
-        },
-        resultScore: {
-            fontSize: '32px',
-            fontWeight: '800',
-            color: '#137333',
-            margin: '10px 0',
-        },
-        resultBtns: {
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '10px',
-            marginTop: '15px',
-        },
-        downloadBtn: {
-            padding: '8px 16px',
-            backgroundColor: '#137333',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '13px',
-        },
-        resetBtn: {
-            padding: '8px 16px',
-            backgroundColor: '#333',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '13px',
-        },
-        sectionBlock: {
-            borderTop: '1px solid #ccc',
-            paddingTop: '20px',
-            marginBottom: '30px',
-        },
-        sectionTitle: {
-            fontSize: '15px',
-            fontWeight: 'bold',
-            backgroundColor: '#222',
-            color: 'white',
-            padding: '5px 12px',
-            borderRadius: '3px',
-            display: 'inline-block',
-            margin: '0 0 20px 0',
-        },
-        questionItem: {
-            marginBottom: '25px',
-            fontSize: '15px',
-            color: '#111',
-            lineHeight: '1.5',
-        },
-        questionText: {
-            fontWeight: 'bold',
-            marginBottom: '8px',
-        },
-        badgeCorrect: {
-            marginLeft: '10px',
-            fontSize: '11px',
-            backgroundColor: '#e6f4ea',
-            color: '#137333',
-            padding: '2px 6px',
-            borderRadius: '3px',
-            fontWeight: 'bold',
-        },
-        badgeWrong: {
-            marginLeft: '10px',
-            fontSize: '11px',
-            backgroundColor: '#fce8e6',
-            color: '#c5221f',
-            padding: '2px 6px',
-            borderRadius: '3px',
-            fontWeight: 'bold',
-        },
-        optionsGrid: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '10px',
-            paddingLeft: '15px',
-            fontFamily: 'sans-serif',
-            fontSize: '13px',
-            boxSizing: 'border-box',
-            width: '100%'
-        },
-        optionLabel: {
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            padding: '8px 12px',
-            border: '1px solid #ddd',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            backgroundColor: '#fff',
-            boxSizing: 'border-box'
-        },
-        submitRow: {
-            borderTop: '2px solid #222',
-            paddingTop: '25px',
-            marginTop: '40px',
-            display: 'flex',
-            justifyContent: 'center',
-        },
-        submitBtn: {
-            padding: '12px 35px',
-            backgroundColor: '#111',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            fontWeight: 'bold',
-            fontSize: '15px',
-            cursor: 'pointer',
-        },
-        signatureBlock: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: '40px',
-            paddingTop: '20px',
-            borderTop: '1px dashed #999',
-            fontSize: '13px',
-        }
-    };
-
     return (
-        <div style={styles.container} className="quiz-wrapper">
+        <div className="quiz-wrapper" style={{ backgroundColor: '#f5f5f5', minHeight: '100vh', padding: '20px 10px', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'serif', boxSizing: 'border-box', width: '100%' }}>
 
-            <style dangerouslySetInnerHTML={{
-                __html: `
-        @media print {
-          body, .quiz-wrapper { background: white !important; padding: 0 !important; }
-          .print-hidden { display: none !important; }
-          .print-border-none { border: none !important; box-shadow: none !important; padding: 0 !important; }
-          .print-bg-transparent { background: transparent !important; border-color: #666 !important; }
-          .print-show-inline { display: inline-block !important; }
-        }
-      `}} />
-
-            {/* Top Action Bar */}
-            <div style={styles.topBar} className="print-hidden">
-                <span style={styles.statusText}>
+            {/* Action Bar */}
+            <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', boxSizing: 'border-box' }} className="print-hidden">
+                <span style={{ fontSize: '14px', color: '#666', fontFamily: 'sans-serif' }}>
                     {isSubmitted ? "✓ પેપર સબમિટ થઈ ગયું છે. હવે તમે PDF સેવ કરી શકો છો." : "📝 પ્રથમ સત્ર પરીક્ષા ચાલુ છે..."}
                 </span>
-                <button type="button" onClick={handlePrint} style={styles.printBtn}>
+                <button type="button" onClick={handlePrint} style={{ padding: '10px 20px', backgroundColor: '#0056b3', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '14px', fontFamily: 'sans-serif' }}>
                     🖨️ {isSubmitted ? "પરિણામની PDF સેવ કરો / પ્રિન્ટ" : "ખાલી પેપર પ્રિન્ટ કરો"}
                 </button>
             </div>
 
             {/* Main Exam Paper Sheet */}
-            <div style={styles.paperCard} className="print-border-none">
+            <div style={{ width: '100%', maxWidth: '850px', backgroundColor: 'white', border: '2px solid #222', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', padding: '20px', boxSizing: 'border-box' }}>
 
                 {/* Header Block */}
-                <div style={styles.headerBlock}>
-                    <h1 style={styles.schoolName}>પાલજ પ્રાયમરી સ્કૂલ, તા-જી :-મહેસાણા</h1>
-                    <h2 style={styles.examTitle}>
+                <div style={{ textAlign: 'center', borderBottom: '4px double #222', paddingBottom: '15px', marginBottom: '20px' }}>
+                    <h1 style={{ fontSize: '22px', fontWeight: 'bold', margin: '0 0 8px 0', color: '#111' }}>પાલજ પ્રાયમરી સ્કૂલ, તા-જી :-મહેસાણા</h1>
+                    <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#333', margin: 0 }}>
                         {isSubmitted ? "પ્રથમ સત્ર પરીક્ષા - વિદ્યાર્થી ગુણપત્રક (Result)" : "પ્રથમ સત્ર પરીક્ષા (ધોરણ - ૩ પ્રશ્નાવલી)"}
                     </h2>
-                    <div style={styles.metaGrid}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '10px', fontSize: '14px', fontWeight: '600', color: '#444', marginTop: '15px' }}>
                         <div>ધોરણ: ૩ (Three)</div>
                         <div>વિષય: ENGLISH</div>
                         <div>વર્ષ: ૨૦૨૬-૨૭</div>
@@ -418,63 +157,57 @@ export default function QuestionPaperPage() {
                 </div>
 
                 {/* Student Details Form Bar */}
-                <div style={styles.infoBar} className="print-bg-transparent">
-                    <div style={styles.inputGroup}>
-                        <span style={styles.label}>વિદ્યાર્થીનું નામ:</span>
-                        <span className="print-show-inline" style={{ display: 'none', fontFamily: 'sans-serif' }}>{studentName || '____________________'}</span>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', backgroundColor: '#f9f9f9', border: '1px solid #ddd', padding: '15px', borderRadius: '5px', marginBottom: '25px', fontSize: '14px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontWeight: 'bold', color: '#333' }}>વિદ્યાર્થીનું નામ:</span>
                         <input
                             type="text"
                             disabled={isSubmitted}
                             value={studentName}
                             onChange={(e) => setStudentName(e.target.value)}
                             placeholder="અહીં નામ લખો"
-                            style={styles.input}
-                            className="print-hidden"
+                            style={{ flex: 1, backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #777', outline: 'none', padding: '2px 5px', fontFamily: 'sans-serif' }}
                         />
                     </div>
-                    <div style={styles.inputGroup}>
-                        <span style={styles.label}>રોલ નંબર:</span>
-                        <span className="print-show-inline" style={{ display: 'none', fontFamily: 'sans-serif' }}>{rollNumber || '_______'}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontWeight: 'bold', color: '#333' }}>રોલ નંબર:</span>
                         <input
                             type="text"
                             disabled={isSubmitted}
                             value={rollNumber}
                             onChange={(e) => setRollNumber(e.target.value)}
                             placeholder="નંબર"
-                            style={styles.input}
-                            className="print-hidden"
+                            style={{ flex: 1, backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #777', outline: 'none', padding: '2px 5px', fontFamily: 'sans-serif' }}
                         />
                     </div>
-                    <div style={styles.inputGroup}>
-                        <span style={styles.label}>વર્ગશિક્ષક:</span>
-                        <span className="print-show-inline" style={{ display: 'none', fontFamily: 'sans-serif' }}>{teacherName || '____________________'}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontWeight: 'bold', color: '#333' }}>વર્ગશિક્ષક:</span>
                         <input
                             type="text"
                             disabled={isSubmitted}
                             value={teacherName}
                             onChange={(e) => setTeacherName(e.target.value)}
                             placeholder="શિક્ષકનું નામ"
-                            style={styles.input}
-                            className="print-hidden"
+                            style={{ flex: 1, backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #777', outline: 'none', padding: '2px 5px', fontFamily: 'sans-serif' }}
                         />
                     </div>
                 </div>
 
                 {/* Dynamic Evaluation Score Board */}
                 {isSubmitted && (
-                    <div style={styles.resultBox} className="print-bg-transparent">
-                        <h3 style={styles.resultTitle}>પરીક્ષા પરિણામ પત્રક (Evaluation Sheet)</h3>
+                    <div style={{ backgroundColor: '#e6f4ea', border: '2px solid #137333', borderRadius: '8px', padding: '20px', marginBottom: '30px', textAlign: 'center' }}>
+                        <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#137333', margin: '0 0 5px 0' }}>પરીક્ષા પરિણામ પત્રક (Evaluation Sheet)</h3>
                         <div style={{ fontSize: '14px', color: '#555' }}>
                             વિદ્યાર્થી: <strong>{studentName}</strong> {rollNumber && `| રોલ નં: ${rollNumber}`}
                         </div>
-                        <div style={styles.resultScore}>
+                        <div style={{ fontSize: '32px', fontWeight: '800', color: '#137333', margin: '10px 0' }}>
                             મેળવેલ કુલ ગુણ: {calculateFinalScore()} / ૫૦
                         </div>
-                        <div style={styles.resultBtns} className="print-hidden">
-                            <button type="button" onClick={handlePrint} style={styles.downloadBtn}>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '15px' }}>
+                            <button type="button" onClick={handlePrint} style={{ padding: '8px 16px', backgroundColor: '#137333', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
                                 💾 આ રિઝલ્ટ PDF ડાઉનલોડ કરો
                             </button>
-                            <button type="button" onClick={handleReset} style={styles.resetBtn}>
+                            <button type="button" onClick={handleReset} style={{ padding: '8px 16px', backgroundColor: '#333', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
                                 ફરીથી નવું પેપર શરૂ કરો
                             </button>
                         </div>
@@ -483,7 +216,7 @@ export default function QuestionPaperPage() {
 
                 {/* General Instructions */}
                 {!isSubmitted && (
-                    <div style={styles.instructionBox} className="print-bg-transparent">
+                    <div style={{ border: '1px solid #999', padding: '12px', borderRadius: '4px', marginBottom: '30px', backgroundColor: '#fafafa', fontSize: '13px', color: '#444', lineHeight: '1.6' }}>
                         <strong>સામાન્ય સૂચનાઓ:</strong><br />
                         ૧. બધા પ્રશ્નો ફરજિયાત છે. દરેક પ્રશ્નનો ૧ ગુણ છે.<br />
                         ૨. નીચે આપેલા વિકલ્પોમાંથી સાચો વિકલ્પ પસંદ કરીને નિશાની કરો.<br />
@@ -494,8 +227,8 @@ export default function QuestionPaperPage() {
                 {/* Main Quiz Sheet */}
                 <form onSubmit={handlePaperSubmit}>
                     {examPaperData.map((section, sIdx) => (
-                        <div key={sIdx} style={styles.sectionBlock}>
-                            <h3 style={styles.sectionTitle} className="print-bg-transparent">
+                        <div key={sIdx} style={{ borderTop: '1px solid #ccc', paddingTop: '20px', marginBottom: '30px' }}>
+                            <h3 style={{ fontSize: '15px', fontWeight: 'bold', backgroundColor: '#222', color: 'white', padding: '5px 12px', borderRadius: '3px', display: 'inline-block', margin: '0 0 20px 0' }}>
                                 {section.title}
                             </h3>
 
@@ -505,41 +238,41 @@ export default function QuestionPaperPage() {
                                     const isCorrect = studentChoice === question.a;
 
                                     return (
-                                        <div key={question.id} style={styles.questionItem}>
-                                            <div style={styles.questionText}>
+                                        <div key={question.id} style={{ marginBottom: '15px', fontSize: '15px', color: '#111', lineHeight: '1.5' }}>
+                                            <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>
                                                 {question.id}. {question.q}
-
                                                 {isSubmitted && (
-                                                    <span style={isCorrect ? styles.badgeCorrect : styles.badgeWrong}>
+                                                    <span style={{ marginLeft: '10px', fontSize: '11px', backgroundColor: isCorrect ? '#e6f4ea' : '#fce8e6', color: isCorrect ? '#137333' : '#c5221f', padding: '2px 6px', borderRadius: '3px', fontWeight: 'bold' }}>
                                                         {isCorrect ? '✓ સાચો જવાબ' : `✗ ખોટો (સાચો: ${String.fromCharCode(65 + question.a)})`}
                                                     </span>
                                                 )}
                                             </div>
 
-                                            <div style={styles.optionsGrid}>
+                                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px', fontFamily: 'sans-serif', fontSize: '13px', width: '100%' }}>
                                                 {question.o.map((option, oIdx) => {
                                                     const isOptionSelected = studentChoice === oIdx;
                                                     const isThisCorrect = question.a === oIdx;
 
-                                                    let finalOptStyle = { ...styles.optionLabel };
+                                                    let bg = '#fff';
+                                                    let border = '1px solid #ddd';
+                                                    let weight = 'normal';
+
                                                     if (isOptionSelected) {
-                                                        finalOptStyle.backgroundColor = '#f0f0f0';
-                                                        finalOptStyle.borderColor = '#111';
-                                                        finalOptStyle.fontWeight = 'bold';
+                                                        bg = '#f0f0f0';
+                                                        border = '1px solid #111';
+                                                        weight = 'bold';
                                                     }
                                                     if (isSubmitted && isThisCorrect) {
-                                                        finalOptStyle.borderColor = '#137333';
-                                                        finalOptStyle.borderWidth = '2px';
+                                                        border = '2px solid #137333';
                                                     }
 
                                                     return (
-                                                        <label key={oIdx} style={finalOptStyle}>
+                                                        <label key={oIdx} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 12px', borderRadius: '4px', cursor: isSubmitted ? 'default' : 'pointer', backgroundColor: bg, border: border, fontWeight: weight }}>
                                                             <input
                                                                 type="radio"
                                                                 disabled={isSubmitted}
                                                                 checked={isOptionSelected}
                                                                 onChange={() => handleOptionChange(question.id, oIdx)}
-                                                                style={{ cursor: isSubmitted ? 'default' : 'pointer' }}
                                                             />
                                                             <span style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                                                                 <span>
@@ -565,8 +298,8 @@ export default function QuestionPaperPage() {
 
                     {/* Form Actions Row */}
                     {!isSubmitted && (
-                        <div style={styles.submitRow} className="print-hidden">
-                            <button type="submit" style={styles.submitBtn}>
+                        <div style={{ borderTop: '2px solid #222', paddingTop: '25px', marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
+                            <button type="submit" style={{ padding: '12px 35px', backgroundColor: '#111', color: 'white', border: 'none', borderRadius: '5px', fontWeight: 'bold', fontSize: '15px', cursor: 'pointer' }}>
                                 સબમિટ કરો અને પરિણામ જુઓ (Submit Paper)
                             </button>
                         </div>
@@ -575,7 +308,7 @@ export default function QuestionPaperPage() {
 
                 {/* Paper Footer / Signing Area */}
                 {isSubmitted && (
-                    <div style={styles.signatureBlock}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '40px', paddingTop: '20px', borderTop: '1px dashed #999', fontSize: '13px' }}>
                         <div>તારીખ: ____/____/________</div>
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ height: '30px' }}></div>
