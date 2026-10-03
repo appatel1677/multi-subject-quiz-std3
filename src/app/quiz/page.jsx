@@ -135,7 +135,8 @@ export default function QuestionPaperPage() {
             flexDirection: 'column',
             alignItems: 'center',
             fontFamily: 'serif',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            width: '100%'
         },
         topBar: {
             width: '100%',
@@ -144,6 +145,7 @@ export default function QuestionPaperPage() {
             justifyContent: 'space-between',
             alignItems: 'center',
             marginBottom: '15px',
+            boxSizing: 'border-box'
         },
         statusText: {
             fontSize: '14px',
@@ -327,11 +329,13 @@ export default function QuestionPaperPage() {
         },
         optionsGrid: {
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '10px',
             paddingLeft: '15px',
             fontFamily: 'sans-serif',
             fontSize: '13px',
+            boxSizing: 'border-box',
+            width: '100%'
         },
         optionLabel: {
             display: 'flex',
@@ -342,6 +346,7 @@ export default function QuestionPaperPage() {
             borderRadius: '4px',
             cursor: 'pointer',
             backgroundColor: '#fff',
+            boxSizing: 'border-box'
         },
         submitRow: {
             borderTop: '2px solid #222',
@@ -400,7 +405,7 @@ export default function QuestionPaperPage() {
 
                 {/* Header Block */}
                 <div style={styles.headerBlock}>
-                    <h1 style={styles.schoolName}>પાલજ પ્રાયમરી સ્કૂલ, તા&જી-મહેસાણા</h1>
+                    <h1 style={styles.schoolName}>પાલજ પ્રાયમરી સ્કૂલ, તા-જી :-મહેસાણા</h1>
                     <h2 style={styles.examTitle}>
                         {isSubmitted ? "પ્રથમ સત્ર પરીક્ષા - વિદ્યાર્થી ગુણપત્રક (Result)" : "પ્રથમ સત્ર પરીક્ષા (ધોરણ - ૩ પ્રશ્નાવલી)"}
                     </h2>
