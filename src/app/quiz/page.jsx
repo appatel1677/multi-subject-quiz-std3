@@ -83,8 +83,6 @@ const examPaperData = [
 export default function QuestionPaperPage() {
     const [answers, setAnswers] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
-
-    // Custom Header & Student States
     const [schoolName, setSchoolName] = useState('');
     const [talukaDist, setTalukaDist] = useState('');
     const [studentName, setStudentName] = useState('');
@@ -132,15 +130,32 @@ export default function QuestionPaperPage() {
         window.print();
     };
 
-    // Helper values for display
     const displaySchool = schoolName.trim() || 'પાલજ પ્રાયમરી સ્કૂલ';
     const displayTalukaDist = talukaDist.trim() || 'તા.&જી-મહેસાણા';
 
     return (
         <div style={{ backgroundColor: '#eef2f5', minHeight: '100vh', padding: '15px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', boxSizing: 'border-box', width: '100%' }}>
 
-            {/* Top Action Bar */}
-            <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }}>
+            <style dangerouslySetInnerHTML={{
+                __html: `
+          @media print {
+            .print-hide { display: none !important; }
+            .print-score-card {
+              border: none !important;
+              background: transparent !important;
+              padding: 0 !important;
+              margin-bottom: 15px !important;
+            }
+            .print-score-text {
+              font-size: 18px !important;
+              color: #000 !important;
+              font-weight: bold !important;
+            }
+          }
+        `
+            }} />
+
+            <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }} className="print-hide">
                 <span style={{ fontSize: '14px', color: '#15803d', fontWeight: 'bold' }}>
                     {isSubmitted ? "✓ અસાઇન્મેન્ટ સબમિટ થઈ ગયું છે." : "📝 ધોરણ-૩ અસાઇન્મેન્ટ ચાલુ છે..."}
                 </span>
@@ -153,13 +168,9 @@ export default function QuestionPaperPage() {
                 </button>
             </div>
 
-            {/* Main Assignment Sheet */}
             <div style={{ width: '100%', maxWidth: '850px', backgroundColor: 'white', border: '2px solid #1e3a8a', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.08)', padding: '15px 20px', boxSizing: 'border-box', overflow: 'hidden' }}>
 
-                {/* Dynamic School Header */}
                 <div style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)', color: 'white', borderRadius: '8px', padding: '18px 12px', textAlign: 'center', marginBottom: '20px', boxShadow: '0 4px 10px rgba(30,58,138,0.2)' }}>
-
-                    {/* School Name & Taluka Inputs / Displays */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                         <input
                             type="text"
@@ -190,10 +201,7 @@ export default function QuestionPaperPage() {
                     </div>
                 </div>
 
-                {/* Student & Date Form Box */}
                 <div style={{ backgroundColor: '#f8fafc', border: '1.5px solid #cbd5e1', padding: '12px 15px', borderRadius: '8px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-
-                    {/* Student Name Row */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
                         <span style={{ fontWeight: 'bold', color: '#1e293b', fontSize: '14px', minWidth: '100px' }}>વિદ્યાર્થીનું નામ:</span>
                         <input
@@ -206,7 +214,6 @@ export default function QuestionPaperPage() {
                         />
                     </div>
 
-                    {/* Roll No, Teacher & Date Row */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px', width: '100%' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <span style={{ fontWeight: 'bold', color: '#1e293b', fontSize: '14px', minWidth: '60px' }}>રોલ નં:</span>
@@ -247,16 +254,20 @@ export default function QuestionPaperPage() {
 
                 {/* Evaluation Score Card */}
                 {isSubmitted && (
-                    <div style={{ backgroundColor: '#f0fdf4', border: '2px solid #16a34a', borderRadius: '10px', padding: '15px', marginBottom: '25px', textAlign: 'center' }}>
-                        <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#15803d', margin: '0 0 5px 0' }}>અસાઇન્મેન્ટ ગુણપત્રક</h3>
-                        <div style={{ fontSize: '13px', color: '#334155' }}>
-                            શાળા: <strong>{displaySchool}</strong> ({displayTalukaDist})<br />
-                            વિદ્યાર્થી: <strong>{studentName}</strong> {rollNumber && `| રોલ નં: ${rollNumber}`} {teacherName && `| વર્ગશિક્ષક: ${teacherName}`} {examDate && `| તારીખ: ${examDate}`}
+                    <div className="print-score-card" style={{ backgroundColor: '#f0fdf4', border: '2px solid #16a34a', borderRadius: '10px', padding: '15px', marginBottom: '25px', textAlign: 'center' }}>
+                        <div className="print-hide">
+                            <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#15803d', margin: '0 0 5px 0' }}>અસાઇન્મેન્ટ પરિણામ</h3>
+                            <div style={{ fontSize: '13px', color: '#334155' }}>
+                                શાળા: <strong>{displaySchool}</strong> ({displayTalukaDist})<br />
+                                વિદ્યાર્થી: <strong>{studentName}</strong> {rollNumber && `| રોલ નં: ${rollNumber}`} {teacherName && `| વર્ગશિક્ષક: ${teacherName}`} {examDate && `| તારીખ: ${examDate}`}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '28px', fontWeight: '800', color: '#16a34a', margin: '8px 0' }}>
+
+                        <div className="print-score-text" style={{ fontSize: '28px', fontWeight: '800', color: '#16a34a', margin: '8px 0' }}>
                             મેળવેલ કુલ ગુણ: {calculateFinalScore()} / ૫૦
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
+
+                        <div className="print-hide" style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
                             <button type="button" onClick={handlePrint} style={{ padding: '8px 14px', backgroundColor: '#16a34a', color: 'white', border: 'none', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
                                 💾 પરિણામ PDF ડાઉનલોડ કરો
                             </button>
@@ -267,14 +278,12 @@ export default function QuestionPaperPage() {
                     </div>
                 )}
 
-                {/* Instructions */}
                 {!isSubmitted && (
                     <div style={{ backgroundColor: '#f1f5f9', borderLeft: '4px solid #3b82f6', padding: '10px 12px', borderRadius: '4px', marginBottom: '20px', fontSize: '13px', color: '#334155', lineHeight: '1.5' }}>
                         <strong>સૂચનાઓ:</strong> ૧. બધા પ્રશ્નોના ઉત્તર આપવા ફરજિયાત છે. ૨. સાચો વિકલ્પ પસંદ કરો. ૩. પૂર્ણ થયા પછી નીચે આપેલા સબમિટ બટન પર ક્લિક કરો.
                     </div>
                 )}
 
-                {/* Questions Section */}
                 <form onSubmit={handlePaperSubmit}>
                     {examPaperData.map((section, sIdx) => (
                         <div key={sIdx} style={{ borderTop: '2px solid #e2e8f0', paddingTop: '15px', marginBottom: '25px' }}>
@@ -298,7 +307,6 @@ export default function QuestionPaperPage() {
                                                 )}
                                             </div>
 
-                                            {/* Options Grid */}
                                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', width: '100%' }}>
                                                 {question.o.map((option, oIdx) => {
                                                     const isOptionSelected = studentChoice === oIdx;
@@ -344,9 +352,8 @@ export default function QuestionPaperPage() {
                         </div>
                     ))}
 
-                    {/* Submit Button */}
                     {!isSubmitted && (
-                        <div style={{ borderTop: '2px solid #1e3a8a', paddingTop: '20px', marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ borderTop: '2px solid #1e3a8a', paddingTop: '20px', marginTop: '30px', display: 'flex', justifyContent: 'center' }} className="print-hide">
                             <button type="submit" style={{ width: '100%', maxWidth: '350px', padding: '12px 20px', backgroundColor: '#1e3a8a', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(30,58,138,0.3)' }}>
                                 સબમિટ અસાઇન્મેન્ટ (Submit)
                             </button>
@@ -354,7 +361,6 @@ export default function QuestionPaperPage() {
                     )}
                 </form>
 
-                {/* Footer Signature */}
                 {isSubmitted && (
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px', paddingTop: '15px', borderTop: '1px dashed #94a3b8', fontSize: '12px', color: '#475569' }}>
                         <div>તારીખ: {examDate || '____/____/________'}</div>

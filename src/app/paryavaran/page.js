@@ -137,7 +137,26 @@ export default function ParyavaranAssignmentPage() {
     return (
         <div style={{ backgroundColor: '#eef2f5', minHeight: '100vh', padding: '15px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', boxSizing: 'border-box', width: '100%' }}>
 
-            <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }}>
+            <style dangerouslySetInnerHTML={{
+                __html: `
+          @media print {
+            .print-hide { display: none !important; }
+            .print-score-card {
+              border: none !important;
+              background: transparent !important;
+              padding: 0 !important;
+              margin-bottom: 15px !important;
+            }
+            .print-score-text {
+              font-size: 18px !important;
+              color: #000 !important;
+              font-weight: bold !important;
+            }
+          }
+        `
+            }} />
+
+            <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }} className="print-hide">
                 <span style={{ fontSize: '14px', color: '#15803d', fontWeight: 'bold' }}>
                     {isSubmitted ? "✓ આસપાસ અસાઇન્મેન્ટ સબમિટ થઈ ગયું છે." : "🌿 ધોરણ-૩ આપણી આસપાસ (પર્યાવરણ) અસાઇન્મેન્ટ ચાલુ છે..."}
                 </span>
@@ -235,16 +254,20 @@ export default function ParyavaranAssignmentPage() {
                 </div>
 
                 {isSubmitted && (
-                    <div style={{ backgroundColor: '#f0fdf4', border: '2px solid #16a34a', borderRadius: '10px', padding: '15px', marginBottom: '25px', textAlign: 'center' }}>
-                        <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#15803d', margin: '0 0 5px 0' }}>આપણી આસપાસ અસાઇન્મેન્ટ પરિણામ</h3>
-                        <div style={{ fontSize: '13px', color: '#334155' }}>
-                            શાળા: <strong>{displaySchool}</strong> ({displayTalukaDist})<br />
-                            વિદ્યાર્થી: <strong>{studentName}</strong> {rollNumber && `| રોલ નં: ${rollNumber}`} {teacherName && `| વર્ગશિક્ષક: ${teacherName}`} {examDate && `| તારીખ: ${examDate}`}
+                    <div className="print-score-card" style={{ backgroundColor: '#f0fdf4', border: '2px solid #16a34a', borderRadius: '10px', padding: '15px', marginBottom: '25px', textAlign: 'center' }}>
+                        <div className="print-hide">
+                            <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#15803d', margin: '0 0 5px 0' }}>આપણી આસપાસ અસાઇન્મેન્ટ પરિણામ</h3>
+                            <div style={{ fontSize: '13px', color: '#334155' }}>
+                                શાળા: <strong>{displaySchool}</strong> ({displayTalukaDist})<br />
+                                વિદ્યાર્થી: <strong>{studentName}</strong> {rollNumber && `| રોલ નં: ${rollNumber}`} {teacherName && `| વર્ગશિક્ષક: ${teacherName}`} {examDate && `| તારીખ: ${examDate}`}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '28px', fontWeight: '800', color: '#16a34a', margin: '8px 0' }}>
+
+                        <div className="print-score-text" style={{ fontSize: '28px', fontWeight: '800', color: '#16a34a', margin: '8px 0' }}>
                             મેળવેલ કુલ ગુણ: {calculateFinalScore()} / ૫૦
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
+
+                        <div className="print-hide" style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
                             <button type="button" onClick={handlePrint} style={{ padding: '8px 14px', backgroundColor: '#16a34a', color: 'white', border: 'none', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
                                 💾 પરિણામ PDF ડાઉનલોડ કરો
                             </button>
@@ -330,7 +353,7 @@ export default function ParyavaranAssignmentPage() {
                     ))}
 
                     {!isSubmitted && (
-                        <div style={{ borderTop: '2px solid #1e3a8a', paddingTop: '20px', marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ borderTop: '2px solid #1e3a8a', paddingTop: '20px', marginTop: '30px', display: 'flex', justifyContent: 'center' }} className="print-hide">
                             <button type="submit" style={{ width: '100%', maxWidth: '350px', padding: '12px 20px', backgroundColor: '#1e3a8a', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(30,58,138,0.3)' }}>
                                 સબમિટ અસાઇન્મેન્ટ (Submit)
                             </button>

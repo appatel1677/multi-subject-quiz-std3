@@ -167,8 +167,26 @@ export default function MathsAssignmentPage() {
     return (
         <div style={{ backgroundColor: '#eef2f5', minHeight: '100vh', padding: '15px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', boxSizing: 'border-box', width: '100%' }}>
 
-            {/* Top Action Bar */}
-            <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }}>
+            <style dangerouslySetInnerHTML={{
+                __html: `
+          @media print {
+            .print-hide { display: none !important; }
+            .print-score-card {
+              border: none !important;
+              background: transparent !important;
+              padding: 0 !important;
+              margin-bottom: 15px !important;
+            }
+            .print-score-text {
+              font-size: 18px !important;
+              color: #000 !important;
+              font-weight: bold !important;
+            }
+          }
+        `
+            }} />
+
+            <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }} className="print-hide">
                 <span style={{ fontSize: '14px', color: '#15803d', fontWeight: 'bold' }}>
                     {isSubmitted ? "✓ ગણિત મેળો અસાઇન્મેન્ટ સબમિટ થઈ ગયું છે." : "🔢 ધોરણ-૩ ગણિત મેળો અસાઇન્મેન્ટ ચાલુ છે..."}
                 </span>
@@ -181,12 +199,9 @@ export default function MathsAssignmentPage() {
                 </button>
             </div>
 
-            {/* Main Assignment Sheet */}
             <div style={{ width: '100%', maxWidth: '850px', backgroundColor: 'white', border: '2px solid #1e3a8a', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.08)', padding: '15px 20px', boxSizing: 'border-box', overflow: 'hidden' }}>
 
-                {/* Dynamic School Header */}
                 <div style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)', color: 'white', borderRadius: '8px', padding: '18px 12px', textAlign: 'center', marginBottom: '20px', boxShadow: '0 4px 10px rgba(30,58,138,0.2)' }}>
-
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                         <input
                             type="text"
@@ -217,9 +232,7 @@ export default function MathsAssignmentPage() {
                     </div>
                 </div>
 
-                {/* Student Form Box */}
                 <div style={{ backgroundColor: '#f8fafc', border: '1.5px solid #cbd5e1', padding: '12px 15px', borderRadius: '8px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
                         <span style={{ fontWeight: 'bold', color: '#1e293b', fontSize: '14px', minWidth: '100px' }}>વિદ્યાર્થીનું નામ:</span>
                         <input
@@ -270,18 +283,21 @@ export default function MathsAssignmentPage() {
                     </div>
                 </div>
 
-                {/* Evaluation Score Card */}
                 {isSubmitted && (
-                    <div style={{ backgroundColor: '#f0fdf4', border: '2px solid #16a34a', borderRadius: '10px', padding: '15px', marginBottom: '25px', textAlign: 'center' }}>
-                        <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#15803d', margin: '0 0 5px 0' }}>ગણિત મેળો અસાઇન્મેન્ટ પરિણામ</h3>
-                        <div style={{ fontSize: '13px', color: '#334155' }}>
-                            શાળા: <strong>{displaySchool}</strong> ({displayTalukaDist})<br />
-                            વિદ્યાર્થી: <strong>{studentName}</strong> {rollNumber && `| રોલ નં: ${rollNumber}`} {teacherName && `| વર્ગશિક્ષક: ${teacherName}`} {examDate && `| તારીખ: ${examDate}`}
+                    <div className="print-score-card" style={{ backgroundColor: '#f0fdf4', border: '2px solid #16a34a', borderRadius: '10px', padding: '15px', marginBottom: '25px', textAlign: 'center' }}>
+                        <div className="print-hide">
+                            <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#15803d', margin: '0 0 5px 0' }}>ગણિત મેળો અસાઇન્મેન્ટ પરિણામ</h3>
+                            <div style={{ fontSize: '13px', color: '#334155' }}>
+                                શાળા: <strong>{displaySchool}</strong> ({displayTalukaDist})<br />
+                                વિદ્યાર્થી: <strong>{studentName}</strong> {rollNumber && `| રોલ નં: ${rollNumber}`} {teacherName && `| વર્ગશિક્ષક: ${teacherName}`} {examDate && `| તારીખ: ${examDate}`}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '28px', fontWeight: '800', color: '#16a34a', margin: '8px 0' }}>
+
+                        <div className="print-score-text" style={{ fontSize: '28px', fontWeight: '800', color: '#16a34a', margin: '8px 0' }}>
                             મેળવેલ કુલ ગુણ: {calculateFinalScore()} / ૭૦
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
+
+                        <div className="print-hide" style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
                             <button type="button" onClick={handlePrint} style={{ padding: '8px 14px', backgroundColor: '#16a34a', color: 'white', border: 'none', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
                                 💾 પરિણામ PDF ડાઉનલોડ કરો
                             </button>
@@ -292,14 +308,12 @@ export default function MathsAssignmentPage() {
                     </div>
                 )}
 
-                {/* Instructions */}
                 {!isSubmitted && (
                     <div style={{ backgroundColor: '#f1f5f9', borderLeft: '4px solid #3b82f6', padding: '10px 12px', borderRadius: '4px', marginBottom: '20px', fontSize: '13px', color: '#334155', lineHeight: '1.5' }}>
                         <strong>સૂચનાઓ:</strong> ૧. નવા પાઠ્યપુસ્તક ગણિત મેળો ના પ્રથમ ૭ પ્રકરણના ૧૦-૧૦ પ્રશ્નો આપેલા છે. ૨. સાચો વિકલ્પ પસંદ કરો. ૩. પૂરું થયા પછી સબમિટ બટન પર ક્લિક કરો.
                     </div>
                 )}
 
-                {/* Questions Form */}
                 <form onSubmit={handlePaperSubmit}>
                     {mathsExamData.map((section, sIdx) => (
                         <div key={sIdx} style={{ borderTop: '2px solid #e2e8f0', paddingTop: '15px', marginBottom: '25px' }}>
@@ -368,9 +382,8 @@ export default function MathsAssignmentPage() {
                         </div>
                     ))}
 
-                    {/* Submit Button */}
                     {!isSubmitted && (
-                        <div style={{ borderTop: '2px solid #1e3a8a', paddingTop: '20px', marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ borderTop: '2px solid #1e3a8a', paddingTop: '20px', marginTop: '30px', display: 'flex', justifyContent: 'center' }} className="print-hide">
                             <button type="submit" style={{ width: '100%', maxWidth: '350px', padding: '12px 20px', backgroundColor: '#1e3a8a', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(30,58,138,0.3)' }}>
                                 સબમિટ ગણિત મેળો અસાઇન્મેન્ટ (Submit)
                             </button>
@@ -378,7 +391,6 @@ export default function MathsAssignmentPage() {
                     )}
                 </form>
 
-                {/* Footer Signature */}
                 {isSubmitted && (
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px', paddingTop: '15px', borderTop: '1px dashed #94a3b8', fontSize: '12px', color: '#475569' }}>
                         <div>તારીખ: {examDate || '____/____/________'}</div>
